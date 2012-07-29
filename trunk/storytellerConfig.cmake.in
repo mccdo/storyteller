@@ -1,0 +1,29 @@
+# - Config file for the storyteller package
+# It defines the following variables
+#  storyteller_INCLUDE_DIRS - include directories for storyteller
+#  storyteller_LIBRARIES    - libraries to link against
+#  storyteller_EXECUTABLE   - the bar executable
+
+@PACKAGE_INIT@
+
+# These are IMPORTED targets created by storytellerLibraryDepends.cmake
+set(storyteller_LIBRARIES "snap" )
+set(storyteller_EXECUTABLE test)
+
+# Compute paths
+# get_filename_component(storyteller_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+if(EXISTS "${PACKAGE_PREFIX_DIR}/CMakeCache.txt")
+    # In build tree
+    include("${PACKAGE_PREFIX_DIR}/lib/storytellerBuildTreeSettings.cmake")
+    # Our library dependencies (contains definitions for IMPORTED targets)
+    include("${PACKAGE_PREFIX_DIR}/lib/storytellerLibraryDepends.cmake")
+else()
+    set_and_check(storyteller_INCLUDE_DIRS "${PACKAGE_PREFIX_DIR}/include")
+    # The storyteller targets file.
+    if(EXISTS "${PACKAGE_PREFIX_DIR}/lib/storyteller-targets.cmake")
+        include("${PACKAGE_PREFIX_DIR}/lib/storyteller-targets.cmake")
+    endif()
+endif()
+
+# The location of the Usestoryteller.cmake file.
+set(storyteller_USE_FILE "${PACKAGE_PREFIX_DIR}/lib/Usestoryteller.cmake")

@@ -58,3 +58,96 @@ SET(LIBRARY_OUTPUT_PATH ${OUTPUT_LIBDIR})
 
 add_subdirectory(src)
 
+#
+# Doxygen
+#find_package( Doxygen )
+#if( DOXYGEN_FOUND )
+#    set( HAVE_DOT "NO" )
+#    if( DOXYGEN_DOT_PATH )
+#        set( HAVE_DOT "YES" )
+#    endif()
+#    
+#    configure_file( ${PROJECT_SOURCE_DIR}/doc/doxyfile.cmake
+#        ${PROJECT_BINARY_DIR}/doc/doxyfile
+#    )
+#    add_custom_target( Documentation ${DOXYGEN_EXECUTABLE}
+#        ${PROJECT_BINARY_DIR}/doc/doxyfile
+#    )
+#    
+#    add_subdirectory( doc/images )
+#endif()
+
+# On windows provide the user with the pdb files 
+# for debugging if they are present
+if(MSVC)
+    install(
+        DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/\${CMAKE_INSTALL_CONFIG_NAME}/
+        DESTINATION lib
+        USE_SOURCE_PERMISSIONS
+        COMPONENT Development
+        FILES_MATCHING PATTERN "*.pdb"
+    )
+endif(MSVC)
+
+# Install the CMake find script for storyteller
+install( FILES "extra/Findstoryteller.cmake"
+    DESTINATION "share/${CMAKE_PROJECT_NAME}/extra"
+    COMPONENT Development
+)
+
+#
+# Create and install all of the auto find tools
+# =============================================
+
+# Add all targets to the build-tree export set
+export(TARGETS snap
+  FILE "${PROJECT_BINARY_DIR}/lib/storytellerLibraryDepends.cmake")
+
+# Export the package for use from the build-tree
+# (this registers the build-tree with a global CMake-registry)
+export(PACKAGE storyteller)
+
+# Create a storytellerBuildTreeSettings.cmake file for the use from the build tree
+configure_file(storytellerBuildTreeSettings.cmake.in
+  "${PROJECT_BINARY_DIR}/lib/storytellerBuildTreeSettings.cmake" @ONLY)
+
+#configure_file(storytellerConfig.cmake.in
+#  "${PROJECT_BINARY_DIR}/lib/storytellerConfig.cmake" @ONLY)
+configure_file(storytellerConfigVersion.cmake.in
+  "${PROJECT_BINARY_DIR}/lib/storytellerConfigVersion.cmake" @ONLY)
+configure_file(Usestoryteller.cmake.in
+  "${PROJECT_BINARY_DIR}/lib/Usestoryteller.cmake" @ONLY)
+
+# Install the export set for use with the install-tree
+install(EXPORT storyteller-targets DESTINATION lib)
+
+include( CMakePackageConfigHelpers )
+# Create the storytellerConfig.cmake and storytellerConfigVersion files
+file(RELATIVE_PATH CONF_REL_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/lib"
+   "${CMAKE_INSTALL_PREFIX}/include")
+
+configure_package_config_file( 
+    storytellerConfig.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/lib/storytellerConfig.cmake
+    INSTALL_DESTINATION lib
+    PATH_VARS CONF_REL_INCLUDE_DIR )
+
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/lib/storytellerConfig.cmake 
+              ${CMAKE_CURRENT_BINARY_DIR}/lib/storytellerConfigVersion.cmake
+              ${CMAKE_CURRENT_BINARY_DIR}/lib/Usestoryteller.cmake
+        DESTINATION lib )
+
+#
+# Setup the fpc auto detection files
+if(WIN32)
+    set(storyteller_FPC_LIBRARIES "/libpath:\"\${libdir}\" snap.lib")
+    set(storyteller_FPC_INCLUDES "/I\"\${includedir}\"")
+else(WIN32)
+    set(storyteller_FPC_INCLUDES "-I\${includedir}")
+    set(storyteller_FPC_LIBRARIES "-L\${libdir} -lsnap")
+endif(WIN32)
+
+configure_file(extra/storyteller.fpc.in
+  "${PROJECT_BINARY_DIR}/lib/flagpoll/storyteller.fpc" @ONLY)
+
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/lib/flagpoll/storyteller.fpc
+        DESTINATION lib/flagpoll )

@@ -1,0 +1,3 @@
+set(storyteller_INCLUDE_DIRS
+  "@PROJECT_SOURCE_DIR@/src"
+  "@PROJECT_BINARY_DIR@")
