@@ -29,6 +29,9 @@ ELSE()
     SET(INSTALL_ARCHIVEDIR lib${LIB_POSTFIX})
 ENDIF()
 
+set_target_properties( ${TARGET_NAME} PROPERTIES VERSION ${storyteller_VERSION} )
+set_target_properties( ${TARGET_NAME} PROPERTIES SOVERSION ${storyteller_VERSION} )
+set_target_properties( ${TARGET_NAME} PROPERTIES PROJECT_LABEL "Lib ${TARGET_NAME}" )
 
 INSTALL(
         TARGETS ${TARGET_NAME}
