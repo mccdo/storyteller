@@ -1,5 +1,3 @@
-set( snap_LIBS PocoFoundation PocoUtil PocoZip )
-    
 #Lets us address our internal includes as <snap/foo.h>
 include_directories(
         ${CMAKE_SOURCE_DIR}/src
@@ -7,9 +5,9 @@ include_directories(
 
 #Lets us know we're building the library so export definition can be set up
 #correctly for win32
-IF(WIN32)
+#IF(WIN32)
 ADD_DEFINITIONS(-DSNAP_LIBRARY)
-ENDIF (WIN32)
+#ENDIF (WIN32)
 
 FILE( GLOB srcs "*.cxx" )
 FILE( GLOB hdrs "*.h" )
@@ -19,7 +17,7 @@ SET(PUBLIC_HEADERS PresentationMaker.h)
 
 SET(TARGET_NAME snap)
 ADD_LIBRARY(${TARGET_NAME} SHARED ${TARGET_SRC} ${PUBLIC_HEADERS})
-TARGET_LINK_LIBRARIES(${TARGET_NAME} ${snap_LIBS} )
+TARGET_LINK_LIBRARIES(${TARGET_NAME} ${snap_LIBS} ${POCO_LIBRARIES})
 
 SET(INSTALL_INCDIR include)
 SET(INSTALL_BINDIR bin)
@@ -34,6 +32,7 @@ ENDIF()
 
 INSTALL(
         TARGETS ${TARGET_NAME}
+        EXPORT storyteller-targets
         RUNTIME DESTINATION ${INSTALL_BINDIR}
         LIBRARY DESTINATION ${INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${INSTALL_ARCHIVEDIR}
