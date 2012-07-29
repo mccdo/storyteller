@@ -1,24 +1,22 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 2.8.8)
 
-project( snap )
+project( storyteller )
 
 SET( CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeModules" )
-#SET( CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/install-64-bit")
-SET( Poco_DIR "${PROJECT_SOURCE_DIR}/CMakeModules" )
-SET( POCO_ROOT "$ENV{POCO_INSTALL_DIR}" )
-SET( Poco_INCLUDE_DIR "${POCO_ROOT}/include" )
-SET( Poco_LIBRARY_DIR "${POCO_ROOT}/lib" )
+
+set(storyteller_MAJOR_VERSION 0)
+set(storyteller_MINOR_VERSION 2)
+set(storyteller_SUB_VERSION 0)
+set(storyteller_VERSION ${storyteller_MAJOR_VERSION}.${storyteller_MINOR_VERSION}.${storyteller_SUB_VERSION})
+
+
+find_package(POCO 1.4.1 REQUIRED COMPONENTS PocoFoundation PocoUtil PocoZip)
 
 #option(BUILD_EXAMPLES "Build examples?" ON)
 
-FIND_PACKAGE(Poco COMPONENTS Foundation Util Zip)
-
-
 INCLUDE_DIRECTORIES( 
-    ${Poco_INCLUDE_DIR}
+    ${POCO_INCLUDE_DIR}
 )
-
-LINK_DIRECTORIES(${Poco_LIBRARY_DIRS})
 
 ################################################################################
 # Platform specific definitions
