@@ -13,6 +13,7 @@
 #include <Poco/Path.h>
 #include <Poco/File.h>
 #include <Poco/DirectoryIterator.h>
+#include <Poco/String.h>
 
 #include "PresentationMaker.h"
 #include "OdpXmlFiles.h"
@@ -252,8 +253,9 @@ void PresentationMaker::LocaleAwareToLower( std::string& text )
 {
     // As suggested by Johannes Schaub at
     // http://stackoverflow.com/questions/313970/stl-string-to-lower-case
-    std::transform(text.begin(), text.end(), text.begin(),
-        std::bind2nd(std::ptr_fun(&std::tolower<char>), std::locale("")));
+    //std::transform(text.begin(), text.end(), text.begin(),
+    //    std::bind2nd(std::ptr_fun(&std::tolower<char>), std::locale("")));
+    Poco::toLowerInPlace( text );
 }
 ////////////////////////////////////////////////////////////////////////////////
 void PresentationMaker::WriteMeta( const Poco::Path& path )
