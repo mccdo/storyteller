@@ -10,10 +10,10 @@ ADD_DEFINITIONS(-DSNAP_LIBRARY)
 #ENDIF (WIN32)
 
 FILE( GLOB srcs "*.cxx" )
-FILE( GLOB hdrs "*.h" )
+#FILE( GLOB hdrs "*.h" )
 
 SET(TARGET_SRC ${srcs})
-SET(PUBLIC_HEADERS PresentationMaker.h)
+SET(PUBLIC_HEADERS PresentationMaker.h Exports.h )
 
 SET(TARGET_NAME snap)
 ADD_LIBRARY(${TARGET_NAME} SHARED ${TARGET_SRC} ${PUBLIC_HEADERS})
