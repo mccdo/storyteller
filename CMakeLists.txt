@@ -32,29 +32,13 @@ IF(WIN32)
     ENDIF(MSVC)
 ENDIF (WIN32)
 
-IF(UNIX AND NOT WIN32 AND NOT APPLE)
-  IF(CMAKE_SIZEOF_VOID_P MATCHES "8")
-      SET(LIB_POSTFIX "64" CACHE STRING "suffix for 32/64 dir placement")
-      MARK_AS_ADVANCED(LIB_POSTFIX)
-  ENDIF()
-ENDIF()
-IF(NOT DEFINED LIB_POSTFIX)
-    SET(LIB_POSTFIX "")
-ENDIF()
+if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32 AND NOT APPLE)
+    include(GNUInstallDirs)
+endif(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32 AND NOT APPLE)
 
-################################################################################
-# Create lib directory if required
-
-IF("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
-   FILE(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-ENDIF("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
-
-################################################################################
-
-SET(OUTPUT_LIBDIR ${PROJECT_BINARY_DIR}/lib)
-MAKE_DIRECTORY(${OUTPUT_LIBDIR})
-SET(LIBRARY_OUTPUT_PATH ${OUTPUT_LIBDIR})
-
+if(NOT DEFINED CMAKE_INSTALL_LIBDIR)
+  set(CMAKE_INSTALL_LIBDIR lib)
+endif(NOT DEFINED CMAKE_INSTALL_LIBDIR)
 
 add_subdirectory(src)
 
@@ -82,7 +66,7 @@ add_subdirectory(src)
 if(MSVC)
     install(
         DIRECTORY ${PROJECT_BINARY_DIR}/lib/\${CMAKE_INSTALL_CONFIG_NAME}/
-        DESTINATION lib
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}
         USE_SOURCE_PERMISSIONS
         COMPONENT Development
         FILES_MATCHING PATTERN "*.pdb"
@@ -101,7 +85,7 @@ install( FILES "extra/Findstoryteller.cmake"
 
 # Add all targets to the build-tree export set
 export(TARGETS snap
-  FILE "${PROJECT_BINARY_DIR}/lib/storytellerLibraryDepends.cmake")
+  FILE "${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/storytellerLibraryDepends.cmake")
 
 # Export the package for use from the build-tree
 # (this registers the build-tree with a global CMake-registry)
@@ -109,32 +93,32 @@ export(PACKAGE storyteller)
 
 # Create a storytellerBuildTreeSettings.cmake file for the use from the build tree
 configure_file(storytellerBuildTreeSettings.cmake.in
-  "${PROJECT_BINARY_DIR}/lib/storytellerBuildTreeSettings.cmake" @ONLY)
+  "${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/storytellerBuildTreeSettings.cmake" @ONLY)
 
 #configure_file(storytellerConfig.cmake.in
-#  "${PROJECT_BINARY_DIR}/lib/storytellerConfig.cmake" @ONLY)
+#  "${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/storytellerConfig.cmake" @ONLY)
 configure_file(storytellerConfigVersion.cmake.in
-  "${PROJECT_BINARY_DIR}/lib/storytellerConfigVersion.cmake" @ONLY)
+  "${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/storytellerConfigVersion.cmake" @ONLY)
 configure_file(Usestoryteller.cmake.in
-  "${PROJECT_BINARY_DIR}/lib/Usestoryteller.cmake" @ONLY)
+  "${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/Usestoryteller.cmake" @ONLY)
 
 # Install the export set for use with the install-tree
-install(EXPORT storyteller-targets DESTINATION lib)
+install(EXPORT storyteller-targets DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 include( CMakePackageConfigHelpers )
 # Create the storytellerConfig.cmake and storytellerConfigVersion files
-file(RELATIVE_PATH CONF_REL_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/lib"
+file(RELATIVE_PATH CONF_REL_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}"
    "${CMAKE_INSTALL_PREFIX}/include")
 
 configure_package_config_file( 
-    storytellerConfig.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/lib/storytellerConfig.cmake
-    INSTALL_DESTINATION lib
+    storytellerConfig.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/storytellerConfig.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}
     PATH_VARS CONF_REL_INCLUDE_DIR )
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/lib/storytellerConfig.cmake 
-              ${CMAKE_CURRENT_BINARY_DIR}/lib/storytellerConfigVersion.cmake
-              ${CMAKE_CURRENT_BINARY_DIR}/lib/Usestoryteller.cmake
-        DESTINATION lib )
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/storytellerConfig.cmake 
+              ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/storytellerConfigVersion.cmake
+              ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/Usestoryteller.cmake
+        DESTINATION ${CMAKE_INSTALL_LIBDIR} )
 
 #
 # Setup the fpc auto detection files
@@ -147,7 +131,7 @@ else(WIN32)
 endif(WIN32)
 
 configure_file(extra/storyteller.fpc.in
-  "${PROJECT_BINARY_DIR}/lib/flagpoll/storyteller.fpc" @ONLY)
+  "${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/flagpoll/storyteller.fpc" @ONLY)
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/lib/flagpoll/storyteller.fpc
-        DESTINATION lib/flagpoll )
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/flagpoll/storyteller.fpc
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/flagpoll )
