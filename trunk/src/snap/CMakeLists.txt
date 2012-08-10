@@ -12,22 +12,9 @@ SET(TARGET_SRC ${srcs})
 SET(PUBLIC_HEADERS PresentationMaker.h Exports.h )
 
 SET(TARGET_NAME snap)
+set(TARGET_VERSION ${storyteller_VERSION})
+set(TARGET_EXPORT storyteller-targets)
 ADD_LIBRARY(${TARGET_NAME} SHARED ${TARGET_SRC} ${PUBLIC_HEADERS})
 TARGET_LINK_LIBRARIES(${TARGET_NAME} ${snap_LIBS} ${POCO_LIBRARIES})
 
-set_target_properties( ${TARGET_NAME} PROPERTIES VERSION ${storyteller_VERSION} )
-set_target_properties( ${TARGET_NAME} PROPERTIES SOVERSION ${storyteller_VERSION} )
-set_target_properties( ${TARGET_NAME} PROPERTIES PROJECT_LABEL "Lib ${TARGET_NAME}" )
-
-INSTALL(
-        TARGETS ${TARGET_NAME}
-        EXPORT storyteller-targets
-        RUNTIME DESTINATION ${INSTALL_BINDIR}
-        LIBRARY DESTINATION ${INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${INSTALL_ARCHIVEDIR}
-    )
-
-INSTALL(
-        FILES       ${PUBLIC_HEADERS}
-        DESTINATION ${INSTALL_INCDIR}/${TARGET_NAME}
-    )
+include(VESModuleInstall)
