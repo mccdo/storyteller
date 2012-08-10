@@ -3,11 +3,7 @@ include_directories(
         ${CMAKE_SOURCE_DIR}/src
     )
 
-#Lets us know we're building the library so export definition can be set up
-#correctly for win32
-#IF(WIN32)
 ADD_DEFINITIONS(-DSNAP_LIBRARY)
-#ENDIF (WIN32)
 
 FILE( GLOB srcs "*.cxx" )
 #FILE( GLOB hdrs "*.h" )
@@ -18,15 +14,6 @@ SET(PUBLIC_HEADERS PresentationMaker.h Exports.h )
 SET(TARGET_NAME snap)
 ADD_LIBRARY(${TARGET_NAME} SHARED ${TARGET_SRC} ${PUBLIC_HEADERS})
 TARGET_LINK_LIBRARIES(${TARGET_NAME} ${snap_LIBS} ${POCO_LIBRARIES})
-
-SET(INSTALL_INCDIR include)
-SET(INSTALL_BINDIR bin)
-SET(INSTALL_ARCHIVEDIR ${CMAKE_INSTALL_LIBDIR})
-IF(WIN32)
-    SET(INSTALL_LIBDIR bin)
-ELSE()
-    SET(INSTALL_LIBDIR ${CMAKE_INSTALL_LIBDIR})
-ENDIF()
 
 set_target_properties( ${TARGET_NAME} PROPERTIES VERSION ${storyteller_VERSION} )
 set_target_properties( ${TARGET_NAME} PROPERTIES SOVERSION ${storyteller_VERSION} )
