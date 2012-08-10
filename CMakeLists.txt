@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 2.8.8)
 
 project( storyteller )
 
-SET( CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeModules" )
+set( CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeModules;${CMAKE_MODULE_PATH}" )
 
 set(storyteller_MAJOR_VERSION 0)
 set(storyteller_MINOR_VERSION 2)
@@ -32,22 +32,7 @@ IF(WIN32)
     ENDIF(MSVC)
 ENDIF (WIN32)
 
-if(CMAKE_COMPILER_IS_GNUCXX)
-    include(GNUInstallDirs)
-endif(CMAKE_COMPILER_IS_GNUCXX)
-
-if(NOT DEFINED CMAKE_INSTALL_LIBDIR)
-  set(CMAKE_INSTALL_LIBDIR lib)
-endif(NOT DEFINED CMAKE_INSTALL_LIBDIR)
-
-set(INSTALL_INCDIR include)
-set(INSTALL_BINDIR bin)
-set(INSTALL_ARCHIVEDIR ${CMAKE_INSTALL_LIBDIR})
-if(WIN32)
-    SET(INSTALL_LIBDIR bin)
-else(WIN32)
-    SET(INSTALL_LIBDIR ${CMAKE_INSTALL_LIBDIR})
-endif(WIN32)
+include(VESBinAndLibDirs)
 
 add_subdirectory(src)
 
