@@ -11,17 +11,18 @@ export(TARGETS ${VES_EXPORT_LIBRARY_TARGETS}
 export(PACKAGE ${CMAKE_PROJECT_NAME})
 
 # Create a storytellerBuildTreeSettings.cmake file for the use from the build tree
-configure_file(${CMAKE_PROJECT_NAME}BuildTreeSettings.cmake.in
+configure_file(${PROJECT_SOURCE_DIR}/CMakeModules/packageBuildTreeSettings.cmake.in
   "${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/${CMAKE_PROJECT_NAME}BuildTreeSettings.cmake" @ONLY)
-configure_file(${CMAKE_PROJECT_NAME}ConfigVersion.cmake.in
+configure_file(${PROJECT_SOURCE_DIR}/CMakeModules/packageConfigVersion.cmake.in
   "${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/${CMAKE_PROJECT_NAME}ConfigVersion.cmake" @ONLY)
-configure_file(Use${CMAKE_PROJECT_NAME}.cmake.in
+configure_file(${PROJECT_SOURCE_DIR}/CMakeModules/Usepackage.cmake.in
   "${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/Use${CMAKE_PROJECT_NAME}.cmake" @ONLY)
 
 include(CMakePackageConfigHelpers)
 # Create the storytellerConfig.cmake and storytellerConfigVersion files
 configure_package_config_file( 
-    ${CMAKE_PROJECT_NAME}Config.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/${CMAKE_PROJECT_NAME}Config.cmake
+    ${PROJECT_SOURCE_DIR}/CMakeModules/packageConfig.cmake.in 
+        ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/${CMAKE_PROJECT_NAME}Config.cmake
     INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}
     PATH_VARS ${VES_CONFIGURE_VARS})
 
