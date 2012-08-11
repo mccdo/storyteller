@@ -8,15 +8,14 @@ set(storyteller_MAJOR_VERSION 0)
 set(storyteller_MINOR_VERSION 2)
 set(storyteller_SUB_VERSION 0)
 set(storyteller_VERSION ${storyteller_MAJOR_VERSION}.${storyteller_MINOR_VERSION}.${storyteller_SUB_VERSION})
+set(VES_PACKAGE_VERSION ${storyteller_VERSION})
 
 set( POCO_ROOT "Please specify" CACHE PATH "Root directory where POCO is installed" )
 find_package(POCO 1.4.1 REQUIRED COMPONENTS PocoFoundation PocoUtil PocoZip)
 
 #option(BUILD_EXAMPLES "Build examples?" ON)
 
-INCLUDE_DIRECTORIES( 
-    ${POCO_INCLUDE_DIR}
-)
+INCLUDE_DIRECTORIES(${POCO_INCLUDE_DIR})
 
 ################################################################################
 # Platform specific definitions
