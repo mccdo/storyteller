@@ -56,17 +56,17 @@ add_subdirectory(src)
 
 include(VESInstallPDBFiles)
 
-set(VES_EXPORT_LIBRARY_TARGETS snap)
+set(VES_EXPORT_LIBRARY_TARGETS storyteller)
 set(VES_CONFIGURE_VARS CMAKE_INSTALL_LIBDIR)
 
 #
 # Setup the fpc auto detection files
 if(WIN32)
-    set(storyteller_FPC_LIBRARIES "/libpath:\"\${libdir}\" snap.lib")
+    set(storyteller_FPC_LIBRARIES "/libpath:\"\${libdir}\" storyteller.lib")
     set(storyteller_FPC_INCLUDES "/I\"\${includedir}\"")
 else(WIN32)
     set(storyteller_FPC_INCLUDES "-I\${includedir}")
-    set(storyteller_FPC_LIBRARIES "-L\${libdir} -lsnap")
+    set(storyteller_FPC_LIBRARIES "-L\${libdir} -lstoryteller")
 endif(WIN32)
 
 include(VESInstallAutoDiscoveryTools)

@@ -19,7 +19,7 @@
 #include "OdpXmlFiles.h"
 #include "alphanum.h"
 
-namespace snap
+namespace storyteller
 {
 
 PresentationMaker::PresentationMaker()
@@ -142,26 +142,26 @@ void PresentationMaker::MakePresentation( const std::string& docname )
 {
     Poco::Path fullPath( docname );
 
-    // Temp directory snapTmp = fullPath_without_filename/snap_tmp
-    Poco::Path snapTmp( fullPath );
-    snapTmp.setFileName( "" );
-    snapTmp.pushDirectory( "snap_tmp" );
+    // Temp directory storytellerTmp = fullPath_without_filename/storyteller_tmp
+    Poco::Path storytellerTmp( fullPath );
+    storytellerTmp.setFileName( "" );
+    storytellerTmp.pushDirectory( "storyteller_tmp" );
 
-    BuildDirectoryStructure( snapTmp );
+    BuildDirectoryStructure( storytellerTmp );
 
-    ProcessImages( snapTmp );
+    ProcessImages( storytellerTmp );
 
-    WriteManifest( snapTmp );
+    WriteManifest( storytellerTmp );
 
-    WriteContent( snapTmp );
+    WriteContent( storytellerTmp );
 
-    WriteUnchangedFiles( snapTmp );
+    WriteUnchangedFiles( storytellerTmp );
 
-    WriteMeta( snapTmp );
+    WriteMeta( storytellerTmp );
 
-    CreateArchive( fullPath, snapTmp );
+    CreateArchive( fullPath, storytellerTmp );
 
-    RemoveDirectory( snapTmp );
+    RemoveDirectory( storytellerTmp );
 }
 ////////////////////////////////////////////////////////////////////////////////
 void PresentationMaker::RemoveDirectory( const Poco::Path& path )
@@ -298,7 +298,7 @@ void PresentationMaker::WriteMeta( const Poco::Path& path )
     }
     {
         Poco::RegularExpression regex( "##GENERATOR_NAME##" );
-        regex.subst( metaData, "snap 0.1", Poco::RegularExpression::RE_GLOBAL );
+        regex.subst( metaData, "storyteller 0.1", Poco::RegularExpression::RE_GLOBAL );
     }
 
     localPath.setFileName( "meta.xml" );
@@ -356,12 +356,12 @@ void PresentationMaker::WriteUnchangedFiles( const Poco::Path& path )
     outFile.close();
 }
 ////////////////////////////////////////////////////////////////////////////////
-void PresentationMaker::CreateArchive( const Poco::Path& filePath, const Poco::Path& snapTmp )
+void PresentationMaker::CreateArchive( const Poco::Path& filePath, const Poco::Path& storytellerTmp )
 {
     std::cout << "Compressing archive..." << std::flush;
     std::ofstream odp( filePath.toString().c_str() );
     Poco::Zip::Compress zipper( odp, true );
-    zipper.addRecursive( snapTmp );
+    zipper.addRecursive( storytellerTmp );
     zipper.close();
     std::cout << "done." << std::endl << std::flush;
 }
