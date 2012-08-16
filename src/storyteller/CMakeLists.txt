@@ -1,7 +1,7 @@
-#Lets us address our internal includes as <snap/foo.h>
+#Lets us address our internal includes as <storyteller/foo.h>
 include_directories(${CMAKE_SOURCE_DIR}/src)
 
-ADD_DEFINITIONS(-DSNAP_LIBRARY)
+ADD_DEFINITIONS(-DSTORYTELLER_LIBRARY)
 
 FILE( GLOB TARGET_SRC "*.cxx" )
 FILE( GLOB hdrs "*.h" )
@@ -9,7 +9,7 @@ FILE( GLOB hdrs "*.h" )
 set(VES_PRIVATE_HEADERS ${hdrs})
 SET(VES_PUBLIC_HEADERS PresentationMaker.h Exports.h )
 
-set(VES_TARGET_NAME snap)
+set(VES_TARGET_NAME storyteller)
 set(VES_TARGET_VERSION ${storyteller_VERSION})
 set(VES_TARGET_EXPORT ${CMAKE_PROJECT_NAME}-targets)
 set(VES_TARGET_CATEGORY Lib)

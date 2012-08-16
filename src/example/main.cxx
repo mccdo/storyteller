@@ -7,7 +7,7 @@
 #include "Poco/Util/AbstractConfiguration.h"
 #include "Poco/AutoPtr.h"
 
-#include <snap/PresentationMaker.h>
+#include <storyteller/PresentationMaker.h>
 
 using Poco::Util::Application;
 using Poco::Util::Option;
@@ -36,16 +36,16 @@ using Poco::Util::OptionCallback;
 //
 // int main( )
 // {
-//     snap::PresentationMaker pm;
+//     storyteller::PresentationMaker pm;
 //     pm.AddDirectory( "SomeTestDirectoryWithImages" );
 //     pm.MakePresentation();
 //     return 0;
 // }
 
-class Snap: public Application
+class Storyteller: public Application
 {
 public:
-    Snap():
+    Storyteller():
         m_noOp( true ),
         m_helpRequested( false ),
         m_recursive( false ),
@@ -62,36 +62,36 @@ protected:
                          "Recursively add subdirectories. Has an effect only on the *first* directory parameter following it. This option can be repeated before each directory.",
                          false );
         recursive.repeatable(true)
-                        .callback( OptionCallback<Snap>(this,
-                                                 &Snap::handleRecursive) );
+                        .callback( OptionCallback<Storyteller>(this,
+                                                 &Storyteller::handleRecursive) );
 
         Option outputFile("output", "o",
                           "Presentation output file name", false,
                           "OutputFile", true );
         outputFile.repeatable(false)
-                .callback( OptionCallback<Snap>(this,
-                                                &Snap::handleOutputName) );
+                .callback( OptionCallback<Storyteller>(this,
+                                                &Storyteller::handleOutputName) );
 
         Option directory("directory", "d",
                                      "Add all image files in directory. Images are added in the order they are found on disk; no sorting is done.", false,
                                      "Directory", true );
         directory.repeatable( true )
-                .callback( OptionCallback<Snap>(this,
-                                                &Snap::handleDirectoryName) );
+                .callback( OptionCallback<Storyteller>(this,
+                                                &Storyteller::handleDirectoryName) );
 
         Option image("image", "i", "Add a single image of type .jpg, .tiff, .bmp, .gif, .png, .pcx, or .xpm", false, "Image",
                                  true );
         image.repeatable( true )
-                .callback( OptionCallback<Snap>(this,
-                                                &Snap::handleImageName) );
+                .callback( OptionCallback<Storyteller>(this,
+                                                &Storyteller::handleImageName) );
 
         Option help("help", "h", "Display this help message and exit");
         help.required(false).repeatable(false)
-            .callback(OptionCallback<Snap>(this, &Snap::handleHelp));
+            .callback(OptionCallback<Storyteller>(this, &Storyteller::handleHelp));
 
         Option version("version", "v", "Display version and exit");
         version.required(false).repeatable(false)
-            .callback(OptionCallback<Snap>(this, &Snap::handleVersion));
+            .callback(OptionCallback<Storyteller>(this, &Storyteller::handleVersion));
 
         options.addOption( help );
         options.addOption( directory );
@@ -142,7 +142,7 @@ protected:
         helpFormatter.setCommand(commandName());
         helpFormatter.setUsage("OPTIONS");
         helpFormatter.setHeader("Builds an ODP-compliant presentation from a group of image files.");
-        helpFormatter.setFooter( "Example use: snap -dDirectoryA -r -dDirectoryB -iImage1 -iImage2 -oMyPresentation.odp\n\nThis example would create a presentation named \"MyPresentation.odp\" from all images found in DirectoryA, all images found in DirectoryB and all of its subdirectories (and their subdirectories, etc.), Image1, and Image2.\n" );
+        helpFormatter.setFooter( "Example use: storyteller -dDirectoryA -r -dDirectoryB -iImage1 -iImage2 -oMyPresentation.odp\n\nThis example would create a presentation named \"MyPresentation.odp\" from all images found in DirectoryA, all images found in DirectoryB and all of its subdirectories (and their subdirectories, etc.), Image1, and Image2.\n" );
         helpFormatter.format(std::cout);
     }
 
@@ -156,7 +156,7 @@ protected:
 
         if( m_showVersion )
         {
-            std::cout << "snap version 0.1" << std::endl;
+            std::cout << "storyteller version 0.1" << std::endl;
             return Application::EXIT_OK;
         }
 
@@ -173,8 +173,8 @@ private:
     bool m_recursive;
     bool m_showVersion;
     std::string m_outputFileName;
-    snap::PresentationMaker m_presentationMaker;
+    storyteller::PresentationMaker m_presentationMaker;
 };
 
 
-POCO_APP_MAIN(Snap)
+POCO_APP_MAIN(Storyteller)

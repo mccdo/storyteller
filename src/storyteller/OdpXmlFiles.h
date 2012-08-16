@@ -1,7 +1,7 @@
 #pragma once
 
 /// @file OdpXmlFiles.h
-/// @namespace snap
+/// @namespace storyteller
 /// This header contains boilerplate xml data that goes in various files
 /// required of a valid .odp. Some of these strings contain ##KEYWORD## tags
 /// that are searched for and replaced when we write the data out into the
@@ -17,14 +17,14 @@
 // supply a valid .odp -- not a .odt template -- which contains, among
 // any other slides with other content, a single slide containing an image
 // of the desired aspect ratio which has had its frame named
-// "SNAP_IMAGE_HOLDER" by right-clicking on the image and selecting the
+// "STORYTELLER_IMAGE_HOLDER" by right-clicking on the image and selecting the
 // "Name..." menu option. There should be only *one* slide with a
-// "SNAP_IMAGE_HOLDER". This slide will get copied over and over by snap,
-// with the image residing in SNAP_IMAGE_HOLDER being replaced each time
-// by the images given to snap. The dummy image supplied in the master will
+// "STORYTELLER_IMAGE_HOLDER". This slide will get copied over and over by storyteller,
+// with the image residing in STORYTELLER_IMAGE_HOLDER being replaced each time
+// by the images given to storyteller. The dummy image supplied in the master will
 // be deleted from the Pictures subdir and removed from the manifest.
 
-namespace snap
+namespace storyteller
 {
 
 const char* mimetype = {"application/vnd.oasis.opendocument.presentation"};
@@ -60,15 +60,15 @@ const char* settings = {
     "config:type=\"boolean\">false</config:config-item><config:config-item "
     "config:name=\"GridIsFront\" "
     "config:type=\"boolean\">false</config:config-item><config:config-item "
-    "config:name=\"IsSnapToGrid\" "
+    "config:name=\"IsstorytellerToGrid\" "
     "config:type=\"boolean\">true</config:config-item><config:config-item "
-    "config:name=\"IsSnapToPageMargins\" "
+    "config:name=\"IsstorytellerToPageMargins\" "
     "config:type=\"boolean\">true</config:config-item><config:config-item "
-    "config:name=\"IsSnapToSnapLines\" "
+    "config:name=\"IsstorytellerTostorytellerLines\" "
     "config:type=\"boolean\">true</config:config-item><config:config-item "
-    "config:name=\"IsSnapToObjectFrame\" "
+    "config:name=\"IsstorytellerToObjectFrame\" "
     "config:type=\"boolean\">true</config:config-item><config:config-item "
-    "config:name=\"IsSnapToObjectPoints\" "
+    "config:name=\"IsstorytellerToObjectPoints\" "
     "config:type=\"boolean\">false</config:config-item><config:config-item "
     "config:name=\"IsPlusHandlesAlwaysVisible\" "
     "config:type=\"boolean\">false</config:config-item><config:config-item "
@@ -126,17 +126,17 @@ const char* settings = {
     "config:type=\"int\">254</config:config-item><config:config-item "
     "config:name=\"GridFineHeight\" "
     "config:type=\"int\">254</config:config-item><config:config-item "
-    "config:name=\"GridSnapWidthXNumerator\" "
+    "config:name=\"GridstorytellerWidthXNumerator\" "
     "config:type=\"int\">254</config:config-item><config:config-item "
-    "config:name=\"GridSnapWidthXDenominator\" "
+    "config:name=\"GridstorytellerWidthXDenominator\" "
     "config:type=\"int\">1</config:config-item><config:config-item "
-    "config:name=\"GridSnapWidthYNumerator\" "
+    "config:name=\"GridstorytellerWidthYNumerator\" "
     "config:type=\"int\">254</config:config-item><config:config-item "
-    "config:name=\"GridSnapWidthYDenominator\" "
+    "config:name=\"GridstorytellerWidthYDenominator\" "
     "config:type=\"int\">1</config:config-item><config:config-item "
-    "config:name=\"IsAngleSnapEnabled\" "
+    "config:name=\"IsAnglestorytellerEnabled\" "
     "config:type=\"boolean\">false</config:config-item><config:config-item "
-    "config:name=\"SnapAngle\" "
+    "config:name=\"storytellerAngle\" "
     "config:type=\"int\">1500</config:config-item><config:config-item "
     "config:name=\"ZoomOnPage\" "
     "config:type=\"boolean\">true</config:config-item></config:config-item-"

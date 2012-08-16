@@ -9,7 +9,7 @@
 #include "Exports.h"
 
 /// @file PresentationMaker.h
-/// @namespace snap
+/// @namespace storyteller
 /// @class PresentationMaker makes an ODP-compliant presentation from a list
 /// of image files. Add images to the presentation by calling AddImage(),
 /// AddImages(), or AddDirectory(), then write out the presentation to disk
@@ -17,10 +17,10 @@
 /// order they were given to AddImage or AddImages. If AddDirectory is used,
 /// images are placed in natural sort order (ie. Image2.jpg is placed before
 /// Image100.jpg, contrary to the usual alphanumeric sort algorithm).
-namespace snap
+namespace storyteller
 {
 
-class SNAP_EXPORT PresentationMaker
+class STORYTELLER_EXPORT PresentationMaker
 {
 public:
     PresentationMaker();
@@ -63,7 +63,7 @@ protected:
     virtual void WriteContent( const Poco::Path& path );
     virtual void WriteManifest( const Poco::Path& path );
     virtual void WriteUnchangedFiles( const Poco::Path& path );
-    virtual void CreateArchive( const Poco::Path& filePath, const Poco::Path& snapTmp );
+    virtual void CreateArchive( const Poco::Path& filePath, const Poco::Path& storytellerTmp );
 
 private:
     /// Delete directory referred to in path
