@@ -7,7 +7,7 @@ FILE( GLOB TARGET_SRC "*.cxx" )
 FILE( GLOB hdrs "*.h" )
 
 set(VES_PRIVATE_HEADERS ${hdrs})
-SET(VES_PUBLIC_HEADERS PresentationMaker.h Exports.h )
+set(VES_PUBLIC_HEADERS PresentationMaker.h Exports.h )
 
 set(VES_TARGET_NAME storyteller)
 set(VES_TARGET_VERSION ${storyteller_VERSION})
