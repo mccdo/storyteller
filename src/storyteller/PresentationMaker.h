@@ -73,9 +73,6 @@ private:
     /// to work with vanilla OpenOffice/LibreOffice.
     bool FileIsImage( const std::string& extension );
 
-    /// In-place conversion to lower case with locale awareness
-    void LocaleAwareToLower( std::string& text );
-
     std::vector< std::string > m_extensionList;
     std::vector< std::string > m_imageList;
     std::string m_pageBlock;

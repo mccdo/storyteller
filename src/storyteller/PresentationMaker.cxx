@@ -123,7 +123,7 @@ void PresentationMaker::AddDirectory( const std::string& directory,
 bool PresentationMaker::FileIsImage( const std::string& extension )
 {
     std::string lowerCaseExtension( extension );
-    LocaleAwareToLower( lowerCaseExtension );
+    Poco::toLowerInPlace( lowerCaseExtension );
 
     std::vector< std::string >::const_iterator itr = m_extensionList.begin();
     while( itr != m_extensionList.end() )
@@ -231,7 +231,7 @@ void PresentationMaker::ProcessImages( const Poco::Path& path )
 
         // Fill out a manifest entry
         std::string lowerCaseExtension( imagePath.getExtension() );
-        LocaleAwareToLower( lowerCaseExtension );
+        Poco::toLowerInPlace( lowerCaseExtension );
         std::string mimeType = m_mimetypeMap[ lowerCaseExtension ];
         std::string manifestData( manifestEntry );
         {
@@ -247,15 +247,6 @@ void PresentationMaker::ProcessImages( const Poco::Path& path )
         m_manifestBlock.append( manifestData );
     }
     std::cout << "done." << std::endl << std::flush;
-}
-////////////////////////////////////////////////////////////////////////////////
-void PresentationMaker::LocaleAwareToLower( std::string& text )
-{
-    // As suggested by Johannes Schaub at
-    // http://stackoverflow.com/questions/313970/stl-string-to-lower-case
-    //std::transform(text.begin(), text.end(), text.begin(),
-    //    std::bind2nd(std::ptr_fun(&std::tolower<char>), std::locale("")));
-    Poco::toLowerInPlace( text );
 }
 ////////////////////////////////////////////////////////////////////////////////
 void PresentationMaker::WriteMeta( const Poco::Path& path )
