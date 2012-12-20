@@ -97,7 +97,7 @@ void PresentationMaker::AddImages( const std::vector< std::string >& images )
 void PresentationMaker::AddDirectory( const std::string& directory,
                                       bool recursive )
 {
-    std::cout << "Searching for images in " << directory << "..."
+    std::cout << "Searching for images in " << directory << " ... "
               << std::flush;
     std::vector<std::string> files;
     std::vector<std::string> dirs;
@@ -202,7 +202,7 @@ void PresentationMaker::BuildDirectoryStructure( const Poco::Path& path )
     tmpFile.createDirectory();
 
     // Subdirs are Pictures, META-INF, Thumbnails
-    std::string base( path.toString(Poco::Path::PATH_UNIX) );
+    std::string base( path.toString() );
     Poco::File f( base + "/Pictures" );
     f.createDirectory();
     f = base + "/META-INF";
