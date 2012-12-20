@@ -369,7 +369,7 @@ void PresentationMaker::WriteUnchangedFiles( const Poco::Path& path )
 void PresentationMaker::CreateArchive( const Poco::Path& filePath, const Poco::Path& storytellerTmp )
 {
     std::cout << "Compressing archive..." << std::flush;
-    std::ofstream odp( filePath.toString().c_str() );
+    std::ofstream odp( filePath.toString().c_str(), std::ios_base::out | std::ios_base::binary );
     Poco::Zip::Compress zipper( odp, true );
     zipper.addRecursive( storytellerTmp );
     zipper.close();
