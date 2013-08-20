@@ -142,7 +142,7 @@ foreach( lib ${_requestedComponents} )
             Poco${lib}${_crtSuffix}
         PATHS ${POCO_ROOT}
             ENV POCO_ROOT
-        PATH_SUFFIXES lib
+        PATH_SUFFIXES lib lib64
     )
     if( NOT POCO_${lib}_LIBRARY )
         message( WARNING "Could not find Poco component library ${lib}" )
@@ -157,13 +157,23 @@ foreach( lib ${_requestedComponents} )
             Poco${lib}${_crtDebugSuffix}
         PATHS ${POCO_ROOT}
             ENV POCO_ROOT
-        PATH_SUFFIXES lib
+        PATH_SUFFIXES lib lib64
     )
     if( POCO_${lib}_LIBRARY_DEBUG )
         list( APPEND POCO_LIBRARIES "debug" ${POCO_${lib}_LIBRARY_DEBUG} )
     endif()
+
+    mark_as_advanced( FORCE
+        POCO_${lib}_LIBRARY
+        POCO_${lib}_LIBRARY_DEBUG
+    )
 endforeach()
 
+mark_as_advanced( FORCE
+    POCO_INCLUDE_DIR
+    POCO_LIBRARIES
+    POCO_VERSION
+)
 
 # handle the QUIETLY and REQUIRED arguments and set POCO_FOUND to TRUE if 
 # all listed variables are TRUE
@@ -171,11 +181,4 @@ include( FindPackageHandleStandardArgs )
 FIND_PACKAGE_HANDLE_STANDARD_ARGS( POCO
     REQUIRED_VARS POCO_INCLUDE_DIR POCO_LIBRARIES
     VERSION_VAR POCO_VERSION
-)
-
-
-mark_as_advanced(
-    POCO_INCLUDE_DIR
-    POCO_LIBRARIES
-    POCO_VERSION
 )
