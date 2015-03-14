@@ -1,0 +1,1 @@
+Storyteller takes a series of images and assembles them into an OpenOffice presentation.
